@@ -4,10 +4,11 @@
 .container {
   max-width: var.$container-width;
   padding: 1.6rem 3.2rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 5rem auto;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
 
-  @include mix.make-grid(40fr 60fr, $align: center);
+  @include mix.make-grid($columns: 1fr, $align: center);
 }
