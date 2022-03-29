@@ -1,0 +1,65 @@
+@use '../variables' as var;
+@use '../mixins' as mix;
+
+.error-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1rem;
+  overflow: hidden;
+
+  width: 60%;
+  height: 20rem;
+  border-radius: 1rem;
+  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 3rem;
+    padding: 1.2rem 2.4rem;
+    background-color: var.$shade-2;
+    color: #fff;
+  }
+
+  &__message {
+    font-size: 1.8rem;
+    padding: 3.2rem 2.4rem;
+    background-color: var.$tint-2;
+    color: var.$text-color;
+    height: 100%;
+  }
+
+  &__confirm {
+    display: inline-block;
+    position: absolute;
+    bottom: 10%;
+    right: 4%;
+    padding: 1.2rem 2.4rem;
+
+    border: none;
+    border-radius: 0.5rem;
+
+    font-size: 1.8rem;
+    font-weight: 500;
+
+    cursor: pointer;
+    background-color: var.$tint-1;
+    transition: all 0.25s;
+
+    &:hover {
+      background-color: var.$shade-1;
+      color: #fff;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1rem);
+}

@@ -9,6 +9,8 @@ const WorkoutForm = props => {
   const [workoutSets, setWorkoutSets] = useState('');
   const [workoutTime, setWorkoutTime] = useState('');
 
+  let error = {};
+
   const workoutTypeChangeHandler = e => {
     setWorkoutType(e.target.value);
     console.log(e.target.value);
@@ -32,6 +34,29 @@ const WorkoutForm = props => {
 
   const workoutFormSubmitHandler = e => {
     e.preventDefault();
+
+    if (
+      !workoutReps.trim() ||
+      !workoutSets.trim() ||
+      !workoutTime.trim() ||
+      !workoutDate.trim()
+    ) {
+      error.title = 'Invalid Input!';
+      error.message = 'The input can not be empty.Please try again 🔁';
+
+      props.onErrorOccur(error);
+      return;
+    }
+
+    if (+workoutReps < 0 || +workoutSets < 0 || +workoutTime < 0) {
+      error.title = 'Invalid Input!';
+      error.message =
+        'The input can not be less than zero(0).Please try again!';
+
+      props.onErrorOccur(error);
+      return;
+    }
+
     const workoutDetails = {
       id: Math.trunc(Math.random() * 1000000 + 1),
       type: workoutType,
