@@ -19,6 +19,13 @@ const WorkoutOutput = props => {
     //prettier-ignore
     options:['Chest','Legs','Shoulder','Back','Biceps','Triceps',],
   };
+
+  if (props.items.length === 0)
+    return (
+      <p className={styles['workout-output__fallback']}>
+        No gym logs found. Please start logging.
+      </p>
+    );
   return (
     <div className={`${styles['workout-output']}`}>
       <div className={styles['workout-output__filters']}>

@@ -25,6 +25,7 @@ const WorkoutInput = props => {
           message={userError.message}
         />
       )}
+
       <div className={`${styles['workout-input']}`}>
         <img
           src={logo}
@@ -35,19 +36,6 @@ const WorkoutInput = props => {
           onSaveWorkout={saveWorkoutHandler}
           onErrorOccur={handleErrorOccur}
         />
-        <p className={`${styles['workout-input__copyright']}`}>
-          {`Copyright`} &copy;
-          {` ${new Date()
-            .getFullYear()
-            .toString()}. Designed and developed by `}
-          <a
-            href="https://twitter.com/poudel_dikshak"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Dikshak Poudel.
-          </a>
-        </p>
       </div>
     </div>
   );
