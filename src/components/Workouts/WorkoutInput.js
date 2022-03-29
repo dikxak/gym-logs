@@ -3,7 +3,10 @@ import WorkoutForm from './WorkoutForm';
 import styles from '../../sass/workouts/WorkoutInput.module.scss';
 import logo from '../../img/logo.png';
 
-const WorkoutInput = () => {
+const WorkoutInput = props => {
+  const saveWorkoutHandler = workoutDetails => {
+    props.onGetWorkout(workoutDetails);
+  };
   return (
     <div className={`${styles['workout-input']}`}>
       <img
@@ -11,7 +14,7 @@ const WorkoutInput = () => {
         alt="GymLogs Logo"
         className={`${styles['workout-input__logo']}`}
       />
-      <WorkoutForm />
+      <WorkoutForm onSaveWorkout={saveWorkoutHandler} />
       <p className={`${styles['workout-input__copyright']}`}>
         {`Copyright`} &copy;
         {` ${new Date().getFullYear().toString()}. Designed and developed by `}

@@ -2,6 +2,8 @@ import React from 'react';
 
 import Card from '../UI/Card';
 import WorkoutSelect from '../Workouts/WorkoutSelect';
+import WorkoutDate from './WorkoutDate';
+import WorkoutTime from './WorkoutTime';
 
 import styles from '../../sass/workouts/WorkoutOutput.module.scss';
 
@@ -35,14 +37,22 @@ const WorkoutOutput = props => {
       </div>
 
       <div className={styles['workout-output__items']}>
-        <Card className={styles['workout-output__item']}>
-          <p>Chest workout on Jan 12 2022</p>
-          <div className={styles['workout-output__item-stats']}>
-            <p>🏋️‍♀️ 15 Repetitions</p>
-            <p>⛹️‍♀️ 5 Total Sets</p>
-            <p>⌚ 5 Hours 30 Minutes</p>
-          </div>
-        </Card>
+        {props.items.map(item => {
+          return (
+            <Card key={item.id} className={styles['workout-output__item']}>
+              <p>
+                {item.type} workout on <WorkoutDate date={item.date} />
+              </p>
+              <div className={styles['workout-output__item-stats']}>
+                <p>🏋️‍♀️ {item.reps} Repetitions</p>
+                <p>⛹️‍♀️ {item.sets} Total Sets</p>
+                <p>
+                  <WorkoutTime time={item.time} />
+                </p>
+              </div>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
