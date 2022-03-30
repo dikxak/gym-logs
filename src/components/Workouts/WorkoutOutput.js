@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Card from '../UI/Card';
 import WorkoutSelect from '../Workouts/WorkoutSelect';
@@ -6,6 +6,7 @@ import WorkoutDate from './WorkoutDate';
 import WorkoutTime from './WorkoutTime';
 
 import styles from '../../sass/workouts/WorkoutOutput.module.scss';
+import classes from '../../sass/workouts/WorkoutSelect.module.scss';
 
 const WorkoutOutput = props => {
   const months = {
@@ -20,6 +21,23 @@ const WorkoutOutput = props => {
     options:['Chest','Legs','Shoulder','Back','Biceps','Triceps',],
   };
 
+  const [type, setType] = useState('Chest');
+  const [month, setMonth] = useState('Jan');
+
+  const typeChangeHanlder = e => {
+    setType(e.target.value);
+  };
+
+  const monthChangeHandler = e => {
+    setMonth(e.target.value);
+  };
+
+  const workouts = props.items.filter(
+    item =>
+      `${item.date.toLocaleString('en-US', { month: 'short' })}` === month &&
+      item.type === type
+  );
+
   if (props.items.length === 0)
     return (
       <p className={styles['workout-output__fallback']}>
@@ -31,35 +49,48 @@ const WorkoutOutput = props => {
       <div className={styles['workout-output__filters']}>
         <Card className={styles['workout-output__filter']}>
           <p>Select by month</p>
-          <WorkoutSelect value={months.value} options={months.options} />
+          <select
+            onChange={monthChangeHandler}
+            className={classes['workout-select']}
+          >
+            <WorkoutSelect options={months.options} />
+          </select>
         </Card>
 
         <Card className={styles['workout-output__filter']}>
           <p>Select by workout type</p>
-          <WorkoutSelect
-            value={workoutType.value}
-            options={workoutType.options}
-          />
+          <select
+            onChange={typeChangeHanlder}
+            className={classes['workout-select']}
+          >
+            <WorkoutSelect options={workoutType.options} />
+          </select>
         </Card>
       </div>
 
       <div className={styles['workout-output__items']}>
-        {props.items.map(item => {
-          return (
-            <Card key={item.id} className={styles['workout-output__item']}>
-              <p>
-                {item.type} workout on <WorkoutDate date={item.date} />
-              </p>
-              <div className={styles['workout-output__item-stats']}>
-                <p>🏋️‍♀️ {item.reps} Repetitions</p>
-                <p>⛹️‍♀️ {item.sets} Total Sets</p>
+        {workouts.length === 0 && (
+          <p className={styles['workout-output__fallback--small']}>
+            No any Workouts Found 😟
+          </p>
+        )}
+        {workouts.length > 0 &&
+          workouts.map(item => {
+            return (
+              <Card key={item.id} className={styles['workout-output__item']}>
                 <p>
-                  <WorkoutTime time={item.time} />
+                  {item.type} workout on <WorkoutDate date={item.date} />
                 </p>
-              </div>
-            </Card>
-          );
-        })}
+                <div className={styles['workout-output__item-stats']}>
+                  <p>🏋️‍♀️ {item.reps} Repetitions</p>
+                  <p>⛹️‍♀️ {item.sets} Total Sets</p>
+                  <p>
+                    <WorkoutTime time={item.time} />
+                  </p>
+                </div>
+              </Card>
+            );
+          })}
       </div>
     </div>
   );

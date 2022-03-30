@@ -51,5 +51,10 @@
     border-radius: 0 0 1rem 1rem;
 
     @include mix.make-flex($align: center, $justify: center);
+
+    &--small {
+      @extend .workout-output__fallback;
+      padding: 1.2rem 2.4rem;
+    }
   }
 }
